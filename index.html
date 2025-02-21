@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disc Golf Fantasy League 2025</title>
+    <title>My Fantasy League</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,24 +31,36 @@
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-        #error1, #error2, #error3 {
+        #updateTable {
+            width: 50%; /* Smaller width for Update grid */
+            font-size: 14px; /* Slightly smaller text */
+        }
+        #error1, #error2, #error3, #error4 {
             color: red;
             text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- Standings Grid -->
-    <h1>Disc Golf Fantasy League 2025</h1>
+    <!-- Update Grid (New, at the Top) -->
+    <h2>Update</h2>
     <div id="error1"></div>
+    <table id="updateTable">
+        <thead id="updateHead"></thead>
+        <tbody id="updateBody"></tbody>
+    </table>
+
+    <!-- Standings Grid -->
+    <h1>My Fantasy League Standings</h1>
+    <div id="error2"></div>
     <table id="standingsTable">
         <thead id="standingsHead"></thead>
         <tbody id="standingsBody"></tbody>
     </table>
 
-    <!-- Rosters Grid (Moved Above Player Stats) -->
+    <!-- Rosters Grid -->
     <h2>Rosters</h2>
-    <div id="error2"></div>
+    <div id="error3"></div>
     <table id="rostersTable">
         <thead id="rostersHead"></thead>
         <tbody id="rostersBody"></tbody>
@@ -56,7 +68,7 @@
 
     <!-- Player Stats Grid -->
     <h2>Player Stats</h2>
-    <div id="error3"></div>
+    <div id="error4"></div>
     <table id="playerStatsTable">
         <thead id="playerStatsHead"></thead>
         <tbody id="playerStatsBody"></tbody>
@@ -105,14 +117,17 @@
         }
 
         // Replace these with your actual CSV URLs
+        const updateUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=1403937531&single=true&output=csv"; // New URL for Update tab
         const standingsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=977045017&single=true&output=csv"; // Current working URL
         const rostersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=912638002&single=true&output=csv"; // Previously Match Results URL
         const playerStatsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=1269436938&single=true&output=csv";
 
+
         // Populate each table
-        populateTable(standingsUrl, "standingsHead", "standingsBody", "error1");
-        populateTable(rostersUrl, "rostersHead", "rostersBody", "error2");
-        populateTable(playerStatsUrl, "playerStatsHead", "playerStatsBody", "error3");
+        populateTable(updateUrl, "updateHead", "updateBody", "error1");
+        populateTable(standingsUrl, "standingsHead", "standingsBody", "error2");
+        populateTable(rostersUrl, "rostersHead", "rostersBody", "error3");
+        populateTable(playerStatsUrl, "playerStatsHead", "playerStatsBody", "error4");
     </script>
 </body>
 </html>
