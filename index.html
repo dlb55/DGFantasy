@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Fantasy League</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        #error {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Fantasy League Standings</h1>
+    <div id="error"></div>
+    <table id="standingsTable">
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+        // Replace with your working CSV URL
+        const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=977045017&single=true&output=csv"; // e.g., https://docs.google.com/spreadsheets/d/[SHEET_ID]/pub?gid=[TAB_ID]&output=csv
+
+        fetch(sheetUrl, { method: 'GET' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                const rows = data.split("\n").map(row => row.split(",").map(cell => cell.replace(/^"|"$/g, "").trim()));
+                if (rows.length < 2) {
+                    throw new Error("No data found in the Sheet!");
+                }
+
+                const headers = rows[0];
+                const thead = document.getElementById("tableHead");
+                let headerRow = "<tr>";
+                headers.forEach(header => {
+                    headerRow += `<th>${header}</th>`;
+                });
+                headerRow += "</tr>";
+                thead.innerHTML = headerRow;
+
+                const tbody = document.getElementById("tableBody");
+                for (let i = 1; i < rows.length; i++) {
+                    if (rows[i].length >= 8) {
+                        let row = "<tr>";
+                        rows[i].forEach(cell => {
+                            row += `<td>${cell}</td>`;
+                        });
+                        row += "</tr>";
+                        tbody.innerHTML += row;
+                    }
+                }
+            })
+            .catch(error => {
+                document.getElementById("error").innerHTML = `Oops! Something went wrong: ${error.message}`;
+            });
+    </script>
+</body>
+</html>
