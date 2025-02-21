@@ -10,7 +10,7 @@
             margin: 20px;
             background-color: #f4f4f4;
         }
-        h1 {
+        h1, h2 {
             text-align: center;
             color: #333;
         }
@@ -31,61 +31,88 @@
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-        #error {
+        #error1, #error2, #error3 {
             color: red;
             text-align: center;
         }
     </style>
 </head>
 <body>
+    <!-- Standings Grid -->
     <h1>Disc Golf Fantasy League 2025</h1>
-    <div id="error"></div>
+    <div id="error1"></div>
     <table id="standingsTable">
-        <thead id="tableHead"></thead>
-        <tbody id="tableBody"></tbody>
+        <thead id="standingsHead"></thead>
+        <tbody id="standingsBody"></tbody>
+    </table>
+
+    <!-- Rosters Grid (Moved Above Player Stats) -->
+    <h2>Rosters</h2>
+    <div id="error2"></div>
+    <table id="rostersTable">
+        <thead id="rostersHead"></thead>
+        <tbody id="rostersBody"></tbody>
+    </table>
+
+    <!-- Player Stats Grid -->
+    <h2>Player Stats</h2>
+    <div id="error3"></div>
+    <table id="playerStatsTable">
+        <thead id="playerStatsHead"></thead>
+        <tbody id="playerStatsBody"></tbody>
     </table>
 
     <script>
-        // Replace with your working CSV URL
-        const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=977045017&single=true&output=csv"; // e.g., https://docs.google.com/spreadsheets/d/[SHEET_ID]/pub?gid=[TAB_ID]&output=csv
-
-        fetch(sheetUrl, { method: 'GET' })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.text();
-            })
-            .then(data => {
-                const rows = data.split("\n").map(row => row.split(",").map(cell => cell.replace(/^"|"$/g, "").trim()));
-                if (rows.length < 2) {
-                    throw new Error("No data found in the Sheet!");
-                }
-
-                const headers = rows[0];
-                const thead = document.getElementById("tableHead");
-                let headerRow = "<tr>";
-                headers.forEach(header => {
-                    headerRow += `<th>${header}</th>`;
-                });
-                headerRow += "</tr>";
-                thead.innerHTML = headerRow;
-
-                const tbody = document.getElementById("tableBody");
-                for (let i = 1; i < rows.length; i++) {
-                    if (rows[i].length >= 8) {
-                        let row = "<tr>";
-                        rows[i].forEach(cell => {
-                            row += `<td>${cell}</td>`;
-                        });
-                        row += "</tr>";
-                        tbody.innerHTML += row;
+        // Function to populate a table from a CSV URL
+        function populateTable(url, headId, bodyId, errorId) {
+            fetch(url, { method: 'GET' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
                     }
-                }
-            })
-            .catch(error => {
-                document.getElementById("error").innerHTML = `Oops! Something went wrong: ${error.message}`;
-            });
+                    return response.text();
+                })
+                .then(data => {
+                    const rows = data.split("\n").map(row => row.split(",").map(cell => cell.replace(/^"|"$/g, "").trim()));
+                    if (rows.length < 2) {
+                        throw new Error("No data found in this tab!");
+                    }
+
+                    const headers = rows[0];
+                    const thead = document.getElementById(headId);
+                    let headerRow = "<tr>";
+                    headers.forEach(header => {
+                        headerRow += `<th>${header}</th>`;
+                    });
+                    headerRow += "</tr>";
+                    thead.innerHTML = headerRow;
+
+                    const tbody = document.getElementById(bodyId);
+                    for (let i = 1; i < rows.length; i++) {
+                        if (rows[i].length > 0) { // Adjust based on expected columns
+                            let row = "<tr>";
+                            rows[i].forEach(cell => {
+                                row += `<td>${cell}</td>`;
+                            });
+                            row += "</tr>";
+                            tbody.innerHTML += row;
+                        }
+                    }
+                })
+                .catch(error => {
+                    document.getElementById(errorId).innerHTML = `Oops! Something went wrong: ${error.message}`;
+                });
+        }
+
+        // Replace these with your actual CSV URLs
+        const standingsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pubhtml?gid=977045017&single=true"; // Current working URL
+        const rostersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=912638002&single=true&output=csv"; // Previously Match Results URL
+        const playerStatsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=1269436938&single=true&output=csv";
+
+        // Populate each table
+        populateTable(standingsUrl, "standingsHead", "standingsBody", "error1");
+        populateTable(rostersUrl, "rostersHead", "rostersBody", "error2");
+        populateTable(playerStatsUrl, "playerStatsHead", "playerStatsBody", "error3");
     </script>
 </body>
 </html>
