@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f4f4f4;
+            position: relative; /* For positioning the top-left image */
         }
         h1, h2 {
             text-align: center;
@@ -39,10 +40,24 @@
             color: red;
             text-align: center;
         }
+        #topLeftImage { /* Changed from topRightImage */
+            position: absolute;
+            top: 10px;
+            left: 10px; /* Changed from right to left */
+            max-width: 150px; /* Adjust size as needed */
+        }
+        #bottomGif {
+            display: block;
+            margin: 20px auto; /* Centers the GIF with margin above */
+            max-width: 300px; /* Adjust size as needed */
+        }
     </style>
 </head>
 <body>
-    <!-- Update Grid (New, at the Top) -->
+    <!-- Top Left Image (Local) -->
+    <img id="topLeftImage" src="dgpt.jpg" alt="Disc Golf Basket">
+
+    <!-- Update Grid -->
     <h2>Disc Golf Fantasy League 2025</h2>
     <div id="error1"></div>
     <table id="updateTable">
@@ -73,6 +88,9 @@
         <thead id="playerStatsHead"></thead>
         <tbody id="playerStatsBody"></tbody>
     </table>
+
+    <!-- Bottom GIF (Local) -->
+    <img id="bottomGif" src="baby.gif" alt="Animated Footer">
 
     <script>
         // Function to populate a table from a CSV URL
@@ -116,12 +134,11 @@
                 });
         }
 
-        // Replace these with your actual CSV URLs
-        const updateUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=1403937531&single=true&output=csv"; // New URL for Update tab
-        const standingsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=977045017&single=true&output=csv"; // Current working URL
-        const rostersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=912638002&single=true&output=csv"; // Previously Match Results URL
+        // Your actual CSV URLs
+        const updateUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=1403937531&single=true&output=csv";
+        const standingsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=977045017&single=true&output=csv";
+        const rostersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=912638002&single=true&output=csv";
         const playerStatsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub?gid=1269436938&single=true&output=csv";
-
 
         // Populate each table
         populateTable(updateUrl, "updateHead", "updateBody", "error1");
