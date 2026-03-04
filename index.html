@@ -10,7 +10,6 @@
             --bg-primary: #0a0e17;
             --bg-secondary: #111827;
             --bg-card: #1a2236;
-            --bg-card-hover: #1f2a42;
             --bg-accent: #0f1a2e;
             --border: #1e2d4a;
             --border-light: #2a3a5c;
@@ -26,7 +25,6 @@
             --accent-purple: #a855f7;
             --accent-purple-dim: rgba(168,85,247,0.12);
             --accent-red: #ef4444;
-            --accent-cyan: #06b6d4;
             --gold: #fbbf24;
             --silver: #94a3b8;
             --bronze: #d97706;
@@ -35,9 +33,7 @@
             --shadow: 0 4px 24px rgba(0,0,0,0.3);
             --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-primary);
@@ -45,746 +41,237 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
         body::before {
             content: '';
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            inset: 0;
             background:
                 radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,197,94,0.06), transparent),
                 radial-gradient(ellipse 60% 40% at 80% 100%, rgba(59,130,246,0.04), transparent);
             pointer-events: none;
             z-index: 0;
         }
-
-        /* ============ HEADER ============ */
         .header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(10,14,23,0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(10,14,23,0.88);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
         }
-
         .header-inner {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
+            max-width: 1280px; margin: 0 auto; padding: 14px 24px;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-shrink: 0;
-        }
-
+        .logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             background: linear-gradient(135deg, var(--accent-green), #16a34a);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 900;
-            color: #0a0e17;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 900; color: #0a0e17;
             box-shadow: 0 0 20px rgba(34,197,94,0.25);
             position: relative;
         }
-
         .logo-icon::after {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 50%;
-            border: 2px solid rgba(34,197,94,0.25);
+            content: ''; position: absolute; inset: -3px;
+            border-radius: 50%; border: 2px solid rgba(34,197,94,0.25);
         }
-
         .logo-text h1 {
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
+            font-size: 18px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.1;
             background: linear-gradient(135deg, var(--text-primary), var(--accent-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-
         .logo-text span {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 11px; color: var(--text-muted); font-weight: 500;
+            letter-spacing: 2px; text-transform: uppercase;
         }
-
-        .dgpt-logo {
-            height: 38px;
-            border-radius: 6px;
-            flex-shrink: 0;
-        }
-
-        /* === NAV === */
+        .dgpt-logo { height: 38px; border-radius: 6px; flex-shrink: 0; }
         .nav {
-            display: flex;
-            gap: 3px;
-            background: var(--bg-secondary);
-            border-radius: var(--radius);
-            padding: 3px;
-            border: 1px solid var(--border);
+            display: flex; gap: 3px; background: var(--bg-secondary);
+            border-radius: var(--radius); padding: 3px; border: 1px solid var(--border);
         }
-
         .nav-tab {
-            padding: 8px 20px;
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            border: none;
-            background: transparent;
-            font-family: inherit;
-            letter-spacing: 0.3px;
-            white-space: nowrap;
+            padding: 8px 20px; border-radius: var(--radius-sm);
+            font-size: 13px; font-weight: 600; color: var(--text-muted);
+            cursor: pointer; transition: all 0.25s ease;
+            border: none; background: transparent;
+            font-family: inherit; letter-spacing: 0.3px; white-space: nowrap;
         }
-
         .nav-tab:hover { color: var(--text-secondary); background: rgba(255,255,255,0.03); }
-
         .nav-tab.active {
-            background: var(--bg-card);
-            color: var(--accent-green);
+            background: var(--bg-card); color: var(--accent-green);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-
+        .header-right { display: flex; align-items: center; gap: 12px; }
         .update-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 6px 14px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            flex-shrink: 0;
+            display: flex; align-items: center; gap: 8px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 100px; padding: 6px 14px;
+            font-size: 12px; color: var(--text-secondary); flex-shrink: 0;
         }
-
         .update-badge .pulse {
-            width: 7px; height: 7px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
+            width: 7px; height: 7px; background: var(--accent-green);
+            border-radius: 50%; animation: pulse 2s ease-in-out infinite;
         }
-
         @keyframes pulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-            50% { opacity: 0.7; box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+            0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(34,197,94,0.4); }
+            50% { opacity:0.7; box-shadow:0 0 0 5px rgba(34,197,94,0); }
         }
-
-        /* ============ MAIN ============ */
         .main {
-            position: relative;
-            z-index: 10;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 24px;
+            position: relative; z-index: 10;
+            max-width: 1280px; margin: 0 auto; padding: 24px;
         }
-
         .page { display: none; animation: fadeIn 0.3s ease; }
         .page.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ============ CARDS ============ */
+        @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
         .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 20px;
+            margin-bottom: 20px; box-shadow: var(--shadow);
         }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .card-title {
-            font-size: 15px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .card-title { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .card-title .icon {
-            width: 30px; height: 30px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
+            width: 30px; height: 30px; border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center; font-size: 15px;
         }
-
-        .card-subtitle {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        /* ============ HOME LAYOUT ============ */
-        .home-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
+        .card-subtitle { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+        .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .home-grid .full-width { grid-column: 1 / -1; }
-
-        /* === BONUS LEADERS === */
-        .bonus-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
+        .bonus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .bonus-card {
-            background: var(--bg-accent);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 14px 12px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.2s;
+            background: var(--bg-accent); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 14px 12px;
+            text-align: center; position: relative; overflow: hidden; transition: border-color 0.2s;
         }
-
         .bonus-card:hover { border-color: var(--border-light); }
-
-        .bonus-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-        }
-
+        .bonus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
         .bonus-card.starts::before { background: var(--accent-blue); }
         .bonus-card.wins::before { background: var(--accent-green); }
         .bonus-card.top10::before { background: var(--accent-orange); }
         .bonus-card.cash::before { background: var(--accent-purple); }
-
-        .bonus-category {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .bonus-pts {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-        }
-
-        .bonus-leader {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .bonus-stat {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 22px;
-            font-weight: 700;
-        }
-
+        .bonus-category { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+        .bonus-pts { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-bottom: 10px; }
+        .bonus-leader { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+        .bonus-stat { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; }
         .bonus-card.starts .bonus-stat { color: var(--accent-blue); }
         .bonus-card.wins .bonus-stat { color: var(--accent-green); }
         .bonus-card.top10 .bonus-stat { color: var(--accent-orange); }
         .bonus-card.cash .bonus-stat { color: var(--accent-purple); }
-
-        /* ============ TABLES ============ */
         .table-wrap {
-            overflow-x: auto;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            -webkit-overflow-scrolling: touch;
+            overflow-x: auto; border-radius: var(--radius-sm);
+            border: 1px solid var(--border); -webkit-overflow-scrolling: touch;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
         thead th {
-            background: var(--bg-accent);
-            color: var(--text-muted);
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 10px 14px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-            white-space: nowrap;
-            position: sticky;
-            top: 0;
-            z-index: 2;
+            background: var(--bg-accent); color: var(--text-muted);
+            font-size: 10px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; padding: 10px 14px; text-align: left;
+            border-bottom: 1px solid var(--border); white-space: nowrap;
+            position: sticky; top: 0; z-index: 2;
         }
-
         thead th.num { text-align: right; }
-
-        tbody td {
-            padding: 10px 14px;
-            border-bottom: 1px solid rgba(30,45,74,0.4);
-            white-space: nowrap;
-        }
-
-        tbody td.num {
-            text-align: right;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-        }
-
+        tbody td { padding: 10px 14px; border-bottom: 1px solid rgba(30,45,74,0.4); white-space: nowrap; }
+        tbody td.num { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
         tbody tr { transition: background 0.15s ease; }
         tbody tr:hover { background: rgba(255,255,255,0.02); }
         tbody tr:last-child td { border-bottom: none; }
-
-        .rank-cell {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-            text-align: center !important;
-            width: 36px;
-        }
-
+        .rank-cell { font-family: 'JetBrains Mono', monospace; font-weight: 600; text-align: center !important; width: 36px; }
         .rank-1 { color: var(--gold); }
         .rank-2 { color: var(--silver); }
         .rank-3 { color: var(--bronze); }
-
-        .pts-highlight {
-            color: var(--accent-green);
-            font-weight: 600;
-        }
-
+        .pts-highlight { color: var(--accent-green); font-weight: 600; }
         .team-name { font-weight: 600; }
         .player-name { font-weight: 500; }
-
-        .team-tag {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 600;
-            padding: 2px 7px;
-            border-radius: 4px;
-            margin-left: 4px;
-            background: var(--accent-blue-dim);
-            color: var(--accent-blue);
-        }
-
-        .team-tag.none {
-            background: rgba(255,255,255,0.04);
-            color: var(--text-muted);
-        }
-
-        /* ============ TEAMS PAGE ============ */
-        .teams-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 20px;
-        }
-
-        .team-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.2s ease;
-        }
-
-        .team-card:hover {
-            border-color: var(--border-light);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .team-card-head {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        .team-card-head::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
-        }
-
-        .team-rank-badge {
-            width: 28px; height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
+        .team-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; margin-left: 4px; background: var(--accent-blue-dim); color: var(--accent-blue); }
+        .team-tag.none { background: rgba(255,255,255,0.04); color: var(--text-muted); }
+        .teams-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; }
+        .team-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: all 0.2s ease; }
+        .team-card:hover { border-color: var(--border-light); box-shadow: var(--shadow-lg); }
+        .team-card-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; position: relative; }
+        .team-card-head::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-green), var(--accent-blue)); }
+        .team-rank-badge { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; margin-right: 12px; flex-shrink: 0; }
         .team-rank-1 { background: rgba(251,191,36,0.15); color: var(--gold); border: 1px solid rgba(251,191,36,0.3); }
         .team-rank-2 { background: rgba(148,163,184,0.1); color: var(--silver); border: 1px solid rgba(148,163,184,0.2); }
         .team-rank-3 { background: rgba(217,119,6,0.12); color: var(--bronze); border: 1px solid rgba(217,119,6,0.25); }
         .team-rank-other { background: rgba(255,255,255,0.04); color: var(--text-muted); border: 1px solid var(--border); }
-
         .team-info h3 { font-size: 16px; font-weight: 700; }
         .team-info .manager { font-size: 12px; color: var(--text-muted); }
-
         .team-pts-block { text-align: right; }
-
-        .team-pts-block .big-pts {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--accent-green);
-        }
-
-        .team-pts-block .label {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .team-meta {
-            display: flex;
-            gap: 2px;
-            padding: 0 20px;
-            background: var(--bg-accent);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .team-meta-item {
-            flex: 1;
-            padding: 10px 6px;
-            text-align: center;
-        }
-
-        .team-meta-item .val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .team-meta-item .lbl {
-            font-size: 9px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .team-roster {
-            padding: 0;
-        }
-
-        .roster-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            border-bottom: 1px solid rgba(30,45,74,0.3);
-            transition: background 0.15s;
-        }
-
+        .team-pts-block .big-pts { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: var(--accent-green); }
+        .team-pts-block .label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .team-meta { display: flex; gap: 2px; padding: 0 20px; background: var(--bg-accent); border-bottom: 1px solid var(--border); }
+        .team-meta-item { flex: 1; padding: 10px 6px; text-align: center; }
+        .team-meta-item .val { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: var(--text-primary); }
+        .team-meta-item .lbl { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .roster-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; border-bottom: 1px solid rgba(30,45,74,0.3); transition: background 0.15s; }
         .roster-row:last-child { border-bottom: none; }
         .roster-row:hover { background: rgba(255,255,255,0.02); }
-
-        .roster-row .player-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .roster-row .slot {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: var(--text-muted);
-            width: 18px;
-            text-align: center;
-        }
-
-        .roster-row .pname {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .roster-row .ir-tag {
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--accent-red);
-            background: rgba(239,68,68,0.12);
-            padding: 1px 6px;
-            border-radius: 3px;
-            margin-left: 6px;
-        }
-
-        .roster-row .player-pts {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--accent-green);
-        }
-
-        .roster-stats {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .roster-stats .mini-stat {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .team-footer {
-            padding: 10px 20px;
-            background: var(--bg-accent);
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .team-footer .drops {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-secondary);
-        }
-
-        /* ============ RULES PAGE ============ */
-        .rules-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
+        .roster-row .player-info { display: flex; align-items: center; gap: 10px; }
+        .roster-row .slot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); width: 18px; text-align: center; }
+        .roster-row .pname { font-size: 14px; font-weight: 500; }
+        .roster-row .player-pts { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent-green); }
+        .roster-stats { display: flex; gap: 12px; align-items: center; }
+        .roster-stats .mini-stat { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+        .team-footer { padding: 10px 20px; background: var(--bg-accent); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
+        .team-footer .drops { font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); }
+        .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .rules-grid .full-width { grid-column: 1 / -1; }
-
-        .rule-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            box-shadow: var(--shadow);
-        }
-
-        .rule-section h3 {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .rule-section p, .rule-section li {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 6px;
-        }
-
-        .rule-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .rule-section ul li::before {
-            content: '›';
-            color: var(--accent-green);
-            font-weight: 700;
-            margin-right: 8px;
-        }
-
-        .payout-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(30,45,74,0.3);
-            font-size: 14px;
-        }
-
+        .rule-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+        .rule-section h3 { font-size: 14px; font-weight: 700; color: var(--accent-green); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .rule-section p, .rule-section li { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 6px; }
+        .rule-section ul { list-style: none; padding: 0; }
+        .rule-section ul li::before { content: '›'; color: var(--accent-green); font-weight: 700; margin-right: 8px; }
+        .payout-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(30,45,74,0.3); font-size: 14px; }
         .payout-row:last-child { border-bottom: none; }
-
         .payout-row .place { color: var(--text-secondary); }
-
-        .payout-row .amount {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-            color: var(--accent-green);
-        }
-
-        /* === SCHEDULE TABLE === */
-        .schedule-row td { font-size: 12px; }
-
-        .event-class {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-        }
-
+        .payout-row .amount { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--accent-green); }
+        .event-class { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; }
         .class-dgpt { background: var(--accent-blue-dim); color: var(--accent-blue); }
         .class-dgpt-plus { background: var(--accent-orange-dim); color: var(--accent-orange); }
         .class-major { background: var(--accent-purple-dim); color: var(--accent-purple); }
-
-        /* ============ LOADING ============ */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-        }
-
-        .loading .spinner {
-            width: 32px; height: 32px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent-green);
-            border-radius: 50%;
-            margin: 0 auto 12px;
-            animation: spin 0.8s linear infinite;
-        }
-
+        .tx-add { color: var(--accent-green); font-weight: 600; }
+        .tx-drop { color: var(--accent-red); font-weight: 600; }
+        .loading { text-align: center; padding: 40px; color: var(--text-muted); }
+        .loading .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent-green); border-radius: 50%; margin: 0 auto 12px; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        .error-msg {
-            text-align: center;
-            padding: 20px;
-            color: var(--accent-red);
-            font-size: 13px;
-        }
-
-        /* ============ RESPONSIVE ============ */
+        .error-msg { text-align: center; padding: 20px; color: var(--accent-red); font-size: 13px; }
+        .footer-gif-wrap { text-align: center; padding: 40px 0 60px; position: relative; z-index: 10; }
+        .footer-gif { max-width: 180px; border-radius: var(--radius); opacity: 0.85; transition: opacity 0.3s; }
+        .footer-gif:hover { opacity: 1; }
         @media (max-width: 900px) {
-            .home-grid { grid-template-columns: 1fr; }
-            .home-grid .full-width { grid-column: 1; }
-            .rules-grid { grid-template-columns: 1fr; }
-            .rules-grid .full-width { grid-column: 1; }
+            .home-grid, .rules-grid { grid-template-columns: 1fr; }
+            .home-grid .full-width, .rules-grid .full-width { grid-column: 1; }
             .teams-grid { grid-template-columns: 1fr; }
             .bonus-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
         @media (max-width: 640px) {
-            .header-inner {
-                flex-wrap: wrap;
-                padding: 12px 16px;
-                gap: 10px;
-            }
-
-            .nav {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-            }
-
-            .nav-tab {
-                padding: 7px 14px;
-                font-size: 12px;
-                flex: 1;
-                text-align: center;
-            }
-
+            .header-inner { flex-wrap: wrap; padding: 12px 16px; gap: 10px; }
+            .nav { order: 3; width: 100%; justify-content: center; }
+            .nav-tab { padding: 7px 14px; font-size: 12px; flex: 1; text-align: center; }
             .update-badge { font-size: 11px; padding: 5px 10px; }
-            .dgpt-logo { height: 30px; }
-
+            .dgpt-logo { height: 28px; }
             .main { padding: 16px; }
-
             .card { padding: 16px; }
-
             .bonus-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-
             .bonus-card { padding: 12px 8px; }
             .bonus-leader { font-size: 12px; }
             .bonus-stat { font-size: 18px; }
-
             table { font-size: 12px; }
             thead th { padding: 8px 10px; font-size: 9px; }
             tbody td { padding: 8px 10px; }
-
             .team-card-head { padding: 14px 16px; }
             .team-meta { padding: 0 16px; }
             .roster-row { padding: 8px 16px; }
             .team-footer { padding: 8px 16px; }
-
             .roster-stats .mini-stat { display: none; }
-
             .rule-section { padding: 16px; }
-
             .logo-text h1 { font-size: 16px; }
-        }
-
-        @media (max-width: 420px) {
-            .bonus-grid { grid-template-columns: 1fr 1fr; }
             .teams-grid { grid-template-columns: 1fr; }
         }
-
-        /* Transaction table */
-        .tx-table td { font-size: 12px; }
-        .tx-add { color: var(--accent-green); font-weight: 600; }
-        .tx-drop { color: var(--accent-red); font-weight: 600; }
-
-        /* ============ FOOTER GIF ============ */
-        .footer-gif-wrap {
-            text-align: center;
-            padding: 40px 0 60px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .footer-gif {
-            max-width: 180px;
-            border-radius: var(--radius);
-            opacity: 0.85;
-            transition: opacity 0.3s;
-        }
-
-        .footer-gif:hover { opacity: 1; }
     </style>
 </head>
 <body>
 
-<!-- ========== HEADER ========== -->
 <div class="header">
     <div class="header-inner">
         <div class="logo">
@@ -799,7 +286,7 @@
             <button class="nav-tab" data-page="teams">Teams</button>
             <button class="nav-tab" data-page="rules">League Info</button>
         </nav>
-        <div style="display:flex;align-items:center;gap:12px;">
+        <div class="header-right">
             <div class="update-badge">
                 <div class="pulse"></div>
                 <span id="lastUpdate">Loading…</span>
@@ -809,769 +296,362 @@
     </div>
 </div>
 
-<!-- ========== MAIN ========== -->
 <div class="main">
-
-    <!-- ====== HOME PAGE ====== -->
+    <!-- HOME -->
     <div class="page active" id="page-home">
         <div id="homeLoading" class="loading"><div class="spinner"></div>Loading league data…</div>
         <div id="homeContent" style="display:none;">
-
-            <!-- STANDINGS -->
             <div class="home-grid">
                 <div class="card full-width">
                     <div class="card-header">
-                        <div class="card-title">
-                            <span class="icon" style="background:var(--accent-green-dim);color:var(--accent-green)">🏆</span>
-                            Team Standings
-                        </div>
+                        <div class="card-title"><span class="icon" style="background:var(--accent-green-dim);color:var(--accent-green)">🏆</span> Team Standings</div>
                         <div class="card-subtitle">Auto-ranked by total points</div>
                     </div>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="text-align:center">#</th>
-                                    <th>Team</th>
-                                    <th>Manager</th>
-                                    <th class="num">Points</th>
-                                    <th class="num">Starts</th>
-                                    <th class="num">Wins</th>
-                                    <th class="num">Top 10s</th>
-                                    <th class="num">Cashed</th>
-                                </tr>
-                            </thead>
-                            <tbody id="standingsBody"></tbody>
-                        </table>
-                    </div>
+                    <div class="table-wrap"><table>
+                        <thead><tr><th style="text-align:center">#</th><th>Team</th><th>Manager</th><th class="num">Points</th><th class="num">Starts</th><th class="num">Wins</th><th class="num">Top 10s</th><th class="num">Cashed</th></tr></thead>
+                        <tbody id="standingsBody"></tbody>
+                    </table></div>
                 </div>
-
-                <!-- BONUS CATEGORIES -->
                 <div class="card full-width">
                     <div class="card-header">
-                        <div class="card-title">
-                            <span class="icon" style="background:var(--accent-orange-dim);color:var(--accent-orange)">⭐</span>
-                            End-of-Season Bonus Leaders
-                        </div>
+                        <div class="card-title"><span class="icon" style="background:var(--accent-orange-dim);color:var(--accent-orange)">⭐</span> End-of-Season Bonus Leaders</div>
                         <div class="card-subtitle">Bonus points awarded to category leaders at season end</div>
                     </div>
                     <div class="bonus-grid" id="bonusGrid"></div>
                 </div>
-
-                <!-- TOP 20 PLAYERS -->
                 <div class="card full-width">
                     <div class="card-header">
-                        <div class="card-title">
-                            <span class="icon" style="background:var(--accent-blue-dim);color:var(--accent-blue)">📊</span>
-                            DGPT Player Rankings — Top 20
-                        </div>
+                        <div class="card-title"><span class="icon" style="background:var(--accent-blue-dim);color:var(--accent-blue)">📊</span> DGPT Player Rankings — Top 20</div>
                     </div>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="text-align:center">#</th>
-                                    <th>Player</th>
-                                    <th>Team</th>
-                                    <th class="num">Points</th>
-                                    <th class="num">Starts</th>
-                                    <th class="num">Wins</th>
-                                    <th class="num">Top 10s</th>
-                                    <th class="num">Cashed</th>
-                                </tr>
-                            </thead>
-                            <tbody id="top20Body"></tbody>
-                        </table>
-                    </div>
+                    <div class="table-wrap"><table>
+                        <thead><tr><th style="text-align:center">#</th><th>Player</th><th>Team</th><th class="num">Points</th><th class="num">Starts</th><th class="num">Wins</th><th class="num">Top 10s</th><th class="num">Cashed</th></tr></thead>
+                        <tbody id="top20Body"></tbody>
+                    </table></div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- ====== TEAMS PAGE ====== -->
+    <!-- TEAMS -->
     <div class="page" id="page-teams">
         <div id="teamsLoading" class="loading"><div class="spinner"></div>Loading teams…</div>
         <div class="teams-grid" id="teamsGrid" style="display:none;"></div>
     </div>
-
-    <!-- ====== RULES PAGE ====== -->
+    <!-- RULES -->
     <div class="page" id="page-rules">
         <div class="rules-grid">
-
-            <div class="rule-section">
-                <h3>📋 League Info</h3>
-                <ul>
-                    <li>5 golfer rosters per team</li>
-                    <li>All 5 golfers will be active</li>
-                    <li>6 teams competing</li>
-                </ul>
-            </div>
-
-            <div class="rule-section">
-                <h3>🔄 Waivers</h3>
-                <ul>
-                    <li>5 add/drops allowed throughout the season</li>
-                    <li>Claims: Monday – Wednesday 11:59 PM MT (Text Drew your request)</li>
-                    <li>Competing claims defer to team with lowest total points</li>
-                </ul>
-            </div>
-
-            <div class="rule-section">
-                <h3>🤝 Trades</h3>
-                <ul>
-                    <li>Trades allowed during waiver period</li>
-                    <li>Uneven trades (2-for-1, etc.) require waiver claims; standard order applies</li>
-                </ul>
-            </div>
-
-            <div class="rule-section">
-                <h3>🏥 Injured Reserve</h3>
-                <ul>
-                    <li>Each team has 1 IR spot for long-term injuries</li>
-                    <li>Player must remain on IR for at least 3 events</li>
-                    <li>Priority waiver claim to fill the open spot</li>
-                </ul>
-            </div>
-
-            <div class="rule-section">
-                <h3>📈 Scoring</h3>
-                <ul>
-                    <li>Disc Golf Pro Tour point system</li>
-                    <li>20 total events (playoff events excluded)</li>
-                    <li>Stats tracked via <a href="https://statmando.com/rankings/dgpt-season/mpo" target="_blank" style="color:var(--accent-green);">StatMando Rankings</a></li>
-                </ul>
-            </div>
-
-            <div class="rule-section">
-                <h3>⭐ End-of-Season Bonus</h3>
-                <ul>
-                    <li><strong style="color:var(--accent-blue)">50 pts</strong> — Most Starts</li>
-                    <li><strong style="color:var(--accent-green)">150 pts</strong> — Most Wins</li>
-                    <li><strong style="color:var(--accent-orange)">100 pts</strong> — Most Top 10s</li>
-                    <li><strong style="color:var(--accent-purple)">75 pts</strong> — Most Cashed</li>
-                </ul>
-                <p style="margin-top:8px;">Points awarded to multiple teams if tied for 1st in a category.</p>
-            </div>
-
-            <div class="rule-section">
-                <h3>💰 Entry & Payout</h3>
-                <p style="margin-bottom:12px;">$50 entry fee</p>
-                <div class="payout-row"><span class="place">🥇 1st Place</span><span class="amount">$100</span></div>
-                <div class="payout-row"><span class="place">🥈 2nd Place</span><span class="amount">$65</span></div>
-                <div class="payout-row"><span class="place">🥉 3rd Place</span><span class="amount">$50</span></div>
-                <div class="payout-row"><span class="place">4th Place</span><span class="amount">$20</span></div>
-                <div class="payout-row"><span class="place">5th Place</span><span class="amount">$10</span></div>
-                <div class="payout-row"><span class="place">6th Place</span><span class="amount">$5</span></div>
-            </div>
-
-            <!-- SCHEDULE -->
+            <div class="rule-section"><h3>📋 League Info</h3><ul><li>5 golfer rosters per team</li><li>All 5 golfers will be active</li><li>6 teams competing</li></ul></div>
+            <div class="rule-section"><h3>🔄 Waivers</h3><ul><li>5 add/drops allowed throughout the season</li><li>Claims: Monday – Wednesday 11:59 PM MT (Text Drew your request)</li><li>Competing claims defer to team with lowest total points</li></ul></div>
+            <div class="rule-section"><h3>🤝 Trades</h3><ul><li>Trades allowed during waiver period</li><li>Uneven trades (2-for-1, etc.) require waiver claims; standard order applies</li></ul></div>
+            <div class="rule-section"><h3>🏥 Injured Reserve</h3><ul><li>Each team has 1 IR spot for long-term injuries</li><li>Player must remain on IR for at least 3 events</li><li>Priority waiver claim to fill the open spot</li></ul></div>
+            <div class="rule-section"><h3>📈 Scoring</h3><ul><li>Disc Golf Pro Tour point system</li><li>20 total events (playoff events excluded)</li><li>Stats via <a href="https://statmando.com/rankings/dgpt-season/mpo" target="_blank" style="color:var(--accent-green)">StatMando Rankings</a></li></ul></div>
+            <div class="rule-section"><h3>⭐ End-of-Season Bonus</h3><ul><li><strong style="color:var(--accent-blue)">50 pts</strong> — Most Starts</li><li><strong style="color:var(--accent-green)">150 pts</strong> — Most Wins</li><li><strong style="color:var(--accent-orange)">100 pts</strong> — Most Top 10s</li><li><strong style="color:var(--accent-purple)">75 pts</strong> — Most Cashed</li></ul><p style="margin-top:8px;">Points awarded to multiple teams if tied for 1st.</p></div>
+            <div class="rule-section"><h3>💰 Entry & Payout</h3><p style="margin-bottom:12px;">$50 entry fee</p><div class="payout-row"><span class="place">🥇 1st</span><span class="amount">$100</span></div><div class="payout-row"><span class="place">🥈 2nd</span><span class="amount">$65</span></div><div class="payout-row"><span class="place">🥉 3rd</span><span class="amount">$50</span></div><div class="payout-row"><span class="place">4th</span><span class="amount">$20</span></div><div class="payout-row"><span class="place">5th</span><span class="amount">$10</span></div><div class="payout-row"><span class="place">6th</span><span class="amount">$5</span></div></div>
             <div class="rule-section full-width">
-                <h3>🗓️ 2025 Event Schedule</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="text-align:center">Wk</th>
-                                <th>Event</th>
-                                <th>Class</th>
-                                <th class="num">Pts Avail</th>
-                                <th>Date</th>
-                                <th>Location</th>
-                            </tr>
-                        </thead>
-                        <tbody id="scheduleBody"></tbody>
-                    </table>
-                </div>
+                <h3>🗓️ Event Schedule</h3>
+                <div id="scheduleLoading" class="loading" style="padding:16px"><div class="spinner"></div>Loading…</div>
+                <div class="table-wrap" id="scheduleWrap" style="display:none;"><table>
+                    <thead><tr><th style="text-align:center">Wk</th><th>Event</th><th>Class</th><th class="num">Pts</th><th>Date</th><th>Loc</th></tr></thead>
+                    <tbody id="scheduleBody"></tbody>
+                </table></div>
             </div>
-
-            <!-- TRANSACTIONS -->
             <div class="rule-section full-width">
                 <h3>🔄 Transaction History</h3>
-                <div class="table-wrap">
-                    <table class="tx-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Team</th>
-                                <th>Added</th>
-                                <th>Dropped</th>
-                            </tr>
-                        </thead>
-                        <tbody id="txBody"></tbody>
-                    </table>
-                </div>
+                <div id="txLoading" class="loading" style="padding:16px"><div class="spinner"></div>Loading…</div>
+                <div class="table-wrap" id="txWrap" style="display:none;"><table>
+                    <thead><tr><th>Date</th><th>Team</th><th>Added</th><th>Dropped</th></tr></thead>
+                    <tbody id="txBody"></tbody>
+                </table></div>
             </div>
-
         </div>
     </div>
-
 </div>
 
-<!-- FOOTER GIF -->
 <div class="footer-gif-wrap">
     <img src="baby.gif" alt="Dance" class="footer-gif">
 </div>
 
 <script>
-// ==========================================
-// CONFIG: Google Sheets Published CSV URLs
-// ==========================================
-const SHEETS_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub";
-const SHEETS = {
-    siteStandings: `${SHEETS_BASE}?gid=977045017&single=true&output=csv`,
-    rosters:       `${SHEETS_BASE}?gid=912638002&single=true&output=csv`,
-    playerStats:   `${SHEETS_BASE}?gid=1269436938&single=true&output=csv`,
-    updated:       `${SHEETS_BASE}?gid=1403937531&single=true&output=csv`,
-    // ⬇️ DREW: Replace these GIDs after publishing the League Info and FAIR tabs in Google Sheets
-    // Go to File > Share > Publish to web > select each tab > Publish, then grab the gid from the URL
-    leagueInfo:    `${SHEETS_BASE}?gid=540664680&single=true&output=csv`,
-    fair:          `${SHEETS_BASE}?gid=1047508582&single=true&output=csv`
+// ================================================================
+//  DREW: Replace each gid=XXXXX with the correct GID for that tab.
+//
+//  To find a tab's GID:
+//  1. In Google Sheets → File → Share → Publish to web
+//  2. Select the tab name, choose CSV, click Publish
+//  3. Copy the URL — the gid=XXXXX part is what you need
+//
+//  Example: if Standings tab publishes as ...gid=123456789...
+//  then set: standings: BASE + "?gid=123456789&single=true&output=csv"
+// ================================================================
+const BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROZ3ZAIkZXlI4sWeDL64fC7KV199TM_10OP6elDdBCSLAezGYjA4GUohIG7-8dOXOL3iD1Yle6_P3k/pub";
+const CSV = {
+    standings:   BASE + "?gid=STANDINGS_GID&single=true&output=csv",
+    teams:       BASE + "?gid=TEAMS_GID&single=true&output=csv",
+    playerStats: BASE + "?gid=PLAYERSTATS_GID&single=true&output=csv",
+    updated:     BASE + "?gid=UPDATED_GID&single=true&output=csv",
+    leagueInfo:  BASE + "?gid=LEAGUEINFO_GID&single=true&output=csv",
+    fair:        BASE + "?gid=FAIR_GID&single=true&output=csv"
 };
 
-// Team name -> Manager mapping
 const MANAGERS = {
-    'Team Greg': 'Greg Lang',
-    'Team DiscPerv': 'John Hatfield',
-    'HeimDoph': 'Chris Molidor',
-    'Uncle Reko': 'Adam Horst',
-    'Team Pete': 'Pete Dublinski',
-    'Team Birdogey': 'Drew LaBelle'
+    'Team Greg':'Greg Lang', 'Team DiscPerv':'John Hatfield',
+    'HeimDoph':'Chris Molidor', 'Uncle Reko':'Adam Horst',
+    'Team Pete':'Pete Dublinski', 'Team Birdogey':'Drew LaBelle'
 };
 
-// Event schedule - will be loaded from sheet
-let SCHEDULE = [];
-
-// Transaction history - will be loaded from sheet
-let TRANSACTIONS = [];
-
-// ==========================================
-// CSV PARSER
-// ==========================================
+// ================================================================
+//  CSV PARSER
+// ================================================================
 function parseCSV(text) {
-    const lines = text.split('\n').filter(l => l.trim());
-    const result = [];
-    for (const line of lines) {
-        const cells = [];
-        let current = '';
-        let inQuotes = false;
+    const lines = text.split(/\r?\n/).filter(l => l.trim());
+    return lines.map(line => {
+        const cells = []; let cur = '', inQ = false;
         for (let i = 0; i < line.length; i++) {
             const ch = line[i];
-            if (ch === '"') {
-                if (inQuotes && line[i + 1] === '"') {
-                    current += '"';
-                    i++;
-                } else {
-                    inQuotes = !inQuotes;
-                }
-            } else if (ch === ',' && !inQuotes) {
-                cells.push(current.trim());
-                current = '';
-            } else {
-                current += ch;
-            }
+            if (ch === '"') { if (inQ && line[i+1] === '"') { cur += '"'; i++; } else inQ = !inQ; }
+            else if (ch === ',' && !inQ) { cells.push(cur.trim()); cur = ''; }
+            else cur += ch;
         }
-        cells.push(current.trim());
-        result.push(cells);
-    }
-    return result;
+        cells.push(cur.trim());
+        return cells;
+    });
 }
-
 async function fetchCSV(url) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return parseCSV(await res.text());
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return parseCSV(await r.text());
+}
+function toF(v) { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+function toI(v) { const n = parseInt(v); return isNaN(n) ? 0 : n; }
+function fmtDate(raw) {
+    try { const d = new Date(raw); if (!isNaN(d)) { const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return `${m[d.getMonth()]} ${d.getDate()}`; } } catch(e) {}
+    return raw;
 }
 
-// ==========================================
-// DATA PROCESSING
-// The site reads from "SiteStandings" (gid=977045017) which has the
-// pre-computed standings, and from "Rosters" (gid=912638002) for team rosters.
-// But since you want auto-ranking from Player Stats, we'll pull Player Stats
-// and compute everything client-side.
-//
-// Strategy: Pull the Teams sheet (roster assignments) and Player Stats sheet.
-// From Player Stats, filter to rostered players and sum per team.
-// ==========================================
+// ================================================================
+//  STATE
+// ================================================================
+let allPlayers = [], teamList = [];
 
-// We'll use the published Standings and Rosters CSVs
-// Standings CSV (gid=977045017) = the SiteStandings tab
-// Rosters CSV (gid=912638002) = the Teams/Rosters tab
-
-let allPlayerStats = [];
-let teamData = {};
-
+// ================================================================
+//  LOAD
+// ================================================================
 async function loadData() {
     try {
-        // Fetch all CSVs in parallel
-        const [standingsCSV, playerCSV, rostersCSV, updatedCSV] = await Promise.all([
-            fetchCSV(SHEETS.siteStandings),
-            fetchCSV(SHEETS.playerStats),
-            fetchCSV(SHEETS.rosters),
-            fetchCSV(SHEETS.updated)
+        // Fetch core data in parallel
+        const [standingsR, teamsR, playerR, updatedR] = await Promise.all([
+            fetchCSV(CSV.standings),
+            fetchCSV(CSV.teams),
+            fetchCSV(CSV.playerStats),
+            fetchCSV(CSV.updated)
         ]);
+        // Optional sheets — don't fail if these can't load
+        let leagueR = null, fairR = null;
+        try { leagueR = await fetchCSV(CSV.leagueInfo); } catch(e) { console.warn('League Info:', e); }
+        try { fairR = await fetchCSV(CSV.fair); } catch(e) { console.warn('FAIR:', e); }
 
-        // Try to load League Info (schedule) and FAIR (transactions) — graceful fallback
-        let leagueInfoCSV = null;
-        let fairCSV = null;
-        try {
-            if (!SHEETS.leagueInfo.includes('LEAGUE_INFO_GID')) {
-                leagueInfoCSV = await fetchCSV(SHEETS.leagueInfo);
-            }
-        } catch(e) { console.warn('Could not load League Info tab:', e); }
-        try {
-            if (!SHEETS.fair.includes('FAIR_GID')) {
-                fairCSV = await fetchCSV(SHEETS.fair);
-            }
-        } catch(e) { console.warn('Could not load FAIR tab:', e); }
-
-        // Parse update info
-        if (updatedCSV.length > 1) {
-            const statsDate = updatedCSV[1][0] || '';
-            const nextEvent = updatedCSV[1][1] || '';
-            document.getElementById('lastUpdate').innerHTML =
-                `Updated: ${statsDate}` + (nextEvent ? ` · Next: ${nextEvent}` : '');
+        // --- Updated ---
+        if (updatedR.length > 1) {
+            const d = updatedR[1][0]||'', nxt = updatedR[1][1]||'';
+            document.getElementById('lastUpdate').textContent = `Updated: ${d}` + (nxt ? ` · Next: ${nxt}` : '');
         }
 
-        // ---- Parse Player Stats ----
-        // Header: Team, Rank, Rank Gain, Player, Points, Points Gain, Starts, Wins, Top 10s, Cashed
-        allPlayerStats = [];
-        if (playerCSV.length > 1) {
-            for (let i = 1; i < playerCSV.length; i++) {
-                const r = playerCSV[i];
-                if (!r[3] || r[3] === '') continue; // skip empty
-                allPlayerStats.push({
-                    team: r[0] || '-',
-                    rank: parseFloat(r[1]) || 999,
-                    player: r[3],
-                    points: parseFloat(r[4]) || 0,
-                    pointsGain: parseFloat(r[5]) || 0,
-                    starts: parseFloat(r[6]) || 0,
-                    wins: parseFloat(r[7]) || 0,
-                    top10s: parseFloat(r[8]) || 0,
-                    cashed: parseFloat(r[9]) || 0
-                });
-            }
+        // --- Player Stats ---
+        // Cols: 0:Team 1:Rank 2:RankGain 3:Player 4:Points 5:PtsGain 6:Starts 7:Wins 8:Top10s 9:Cashed
+        allPlayers = [];
+        for (let i = 1; i < playerR.length; i++) {
+            const r = playerR[i], name = (r[3]||'').trim();
+            if (!name) continue;
+            allPlayers.push({
+                team:(r[0]||'-').trim(), rank:toF(r[1])||999, player:name,
+                points:toF(r[4]), starts:toF(r[6]), wins:toF(r[7]), top10s:toF(r[8]), cashed:toF(r[9])
+            });
         }
 
-        // ---- Parse Rosters to build team roster lists ----
-        // The Rosters CSV layout:
-        // Row 0: Team, Team Greg, , Team DiscPerv, , HeimDoph, , Uncle Reko, , Team Pete, , Team Birdogey
-        // Row 1: Manager, Greg Lang, Pts, John Hatfield, Pts, ...
-        // Row 2+: slot#, player, pts, player, pts, ...
-        teamData = {};
-        if (rostersCSV.length > 2) {
-            const teamNames = [];
-            // Extract team names from row 0 (indices 1, 3, 5, 7, 9, 11)
-            for (let c = 1; c < rostersCSV[0].length; c += 2) {
-                if (rostersCSV[0][c] && rostersCSV[0][c] !== '') {
-                    teamNames.push({
-                        name: rostersCSV[0][c],
-                        manager: rostersCSV[1] ? rostersCSV[1][c] || '' : '',
-                        nameCol: c,
-                        ptsCol: c + 1
-                    });
-                }
+        // --- Teams (rosters) ---
+        // Row0: Team | TeamName | (blank) | TeamName | (blank) | ...
+        // Row1: Manager | Name | Pts | Name | Pts | ...
+        // Row2+: slot | player | pts | player | pts | ...
+        const tDefs = [];
+        if (teamsR.length > 2) {
+            for (let c = 1; c < teamsR[0].length; c += 2) {
+                const n = (teamsR[0][c]||'').trim();
+                if (n) tDefs.push({ name:n, mgr:(teamsR[1]?teamsR[1][c]:'').trim(), nc:c, pc:c+1 });
             }
-
-            // Initialize team data
-            for (const t of teamNames) {
-                teamData[t.name] = {
-                    manager: t.manager,
-                    players: [],
-                    irPlayers: [],
-                    totalPoints: 0,
-                    totalStarts: 0,
-                    totalWins: 0,
-                    totalTop10s: 0,
-                    totalCashed: 0,
-                    addsRemaining: 0
-                };
+        }
+        const tMap = {};
+        for (const d of tDefs) {
+            tMap[d.name] = {
+                name:d.name, manager:d.mgr||MANAGERS[d.name]||'',
+                players:[], totalPoints:0, totalStarts:0, totalWins:0, totalTop10s:0, totalCashed:0, addsRemaining:0
+            };
+        }
+        let pastRoster = false;
+        for (let i = 2; i < teamsR.length && !pastRoster; i++) {
+            const row = teamsR[i], c0 = (row[0]||'').trim();
+            if (c0 === 'IR') continue;
+            if ((row[1]||'').includes('Add/Drop')) {
+                for (const d of tDefs) { if (tMap[d.name]) tMap[d.name].addsRemaining = toF(row[d.pc]); }
+                pastRoster = true; continue;
             }
-
-            // Parse roster rows (rows 2-5 typically = slots 1-4)
-            let inIR = false;
-            let pastRoster = false;
-            for (let r = 2; r < rostersCSV.length; r++) {
-                const row = rostersCSV[r];
-                const firstCell = (row[0] || '').toString().trim();
-
-                if (firstCell === 'IR') {
-                    inIR = true;
-                    continue;
-                }
-
-                // Check for Add/Drops Remaining row
-                if (row[1] && row[1].toString().includes('Add/Drops')) {
-                    for (const t of teamNames) {
-                        const val = parseFloat(row[t.ptsCol]);
-                        if (!isNaN(val)) teamData[t.name].addsRemaining = val;
-                    }
-                    pastRoster = true;
-                    continue;
-                }
-
-                // Check for TOTAL POINTS row
-                if (row[1] && row[1].toString().includes('TOTAL')) {
-                    continue;
-                }
-
-                // Check for IR/Drop section
-                if (row[1] && row[1].toString().includes('IR/Drop')) {
-                    continue;
-                }
-
-                if (pastRoster) continue;
-
-                // Active roster rows (slot 1-4)
-                if (!inIR && !pastRoster) {
-                    const slotNum = parseInt(firstCell);
-                    if (!isNaN(slotNum) && slotNum >= 1 && slotNum <= 5) {
-                        for (const t of teamNames) {
-                            const playerName = (row[t.nameCol] || '').trim();
-                            const pts = parseFloat(row[t.ptsCol]) || 0;
-                            if (playerName) {
-                                // Look up full stats from player stats
-                                const pStats = allPlayerStats.find(p => p.player === playerName);
-                                teamData[t.name].players.push({
-                                    name: playerName,
-                                    points: pts,
-                                    starts: pStats ? pStats.starts : 0,
-                                    wins: pStats ? pStats.wins : 0,
-                                    top10s: pStats ? pStats.top10s : 0,
-                                    cashed: pStats ? pStats.cashed : 0,
-                                    rank: pStats ? pStats.rank : '-'
-                                });
-                            }
-                        }
+            if ((row[1]||'').includes('TOTAL') || (row[1]||'').includes('IR/Drop')) { pastRoster = true; continue; }
+            const slot = parseInt(c0);
+            if (!isNaN(slot) && slot >= 1 && slot <= 6) {
+                for (const d of tDefs) {
+                    const pn = (row[d.nc]||'').trim(), pts = toF(row[d.pc]);
+                    if (pn && tMap[d.name]) {
+                        const ps = allPlayers.find(p => p.player === pn);
+                        tMap[d.name].players.push({
+                            name:pn, points:pts,
+                            starts:ps?ps.starts:0, wins:ps?ps.wins:0,
+                            top10s:ps?ps.top10s:0, cashed:ps?ps.cashed:0
+                        });
                     }
                 }
             }
-
-            // Compute team totals from active rosters
-            for (const tName of Object.keys(teamData)) {
-                const t = teamData[tName];
-                t.totalPoints = t.players.reduce((s, p) => s + p.points, 0);
-                t.totalStarts = t.players.reduce((s, p) => s + p.starts, 0);
-                t.totalWins = t.players.reduce((s, p) => s + p.wins, 0);
-                t.totalTop10s = t.players.reduce((s, p) => s + p.top10s, 0);
-                t.totalCashed = t.players.reduce((s, p) => s + p.cashed, 0);
+        }
+        // Sum roster totals
+        for (const t of Object.values(tMap)) {
+            t.totalPoints = t.players.reduce((s,p)=>s+p.points,0);
+            t.totalStarts = t.players.reduce((s,p)=>s+p.starts,0);
+            t.totalWins   = t.players.reduce((s,p)=>s+p.wins,0);
+            t.totalTop10s = t.players.reduce((s,p)=>s+p.top10s,0);
+            t.totalCashed = t.players.reduce((s,p)=>s+p.cashed,0);
+        }
+        // Override from Standings if available (handles fractional tiebreaker pts)
+        // Cols: 0:Place 1:Change 2:Team 3:Points 4:Starts 5:Wins 6:Top10s 7:Cashed
+        for (let i = 1; i < standingsR.length; i++) {
+            const r = standingsR[i], n = (r[2]||'').trim();
+            if (n && tMap[n]) {
+                const p = toF(r[3]); if (p > 0) tMap[n].totalPoints = p;
+                const s = toI(r[4]); if (s > 0) tMap[n].totalStarts = s;
+                const w = toI(r[5]); if (w > 0) tMap[n].totalWins = w;
+                const t10 = toI(r[6]); if (t10 > 0) tMap[n].totalTop10s = t10;
+                const ca = toI(r[7]); if (ca > 0) tMap[n].totalCashed = ca;
             }
         }
+        // Sort by points = auto-rank
+        teamList = Object.values(tMap).sort((a,b) => b.totalPoints - a.totalPoints);
 
-        // Alternatively: if standings CSV already has computed totals, use those
-        // (they account for fractional points from tiebreakers etc.)
-        // standingsCSV: Place, Change, Team, Points, Starts, Wins, Top 10's, Cashed
-        if (standingsCSV.length > 1) {
-            for (let i = 1; i < standingsCSV.length; i++) {
-                const r = standingsCSV[i];
-                const tName = (r[2] || '').trim();
-                if (tName && teamData[tName]) {
-                    // Use the pre-computed standings values (more accurate with tiebreakers)
-                    teamData[tName].totalPoints = parseFloat(r[3]) || teamData[tName].totalPoints;
-                    teamData[tName].totalStarts = parseInt(r[4]) || teamData[tName].totalStarts;
-                    teamData[tName].totalWins = parseInt(r[5]) || teamData[tName].totalWins;
-                    teamData[tName].totalTop10s = parseInt(r[6]) || teamData[tName].totalTop10s;
-                    teamData[tName].totalCashed = parseInt(r[7]) || teamData[tName].totalCashed;
-                }
-            }
-        }
-
-        // ---- Parse Schedule from League Info CSV ----
-        // The League Info CSV has the schedule in a mixed layout.
-        // Schedule rows have: col D=Week, E=Event Class, F=Event, G=Pts Possible, H=Start Date, I=Location
-        // In CSV form these map to columns 3,4,5,6,7,8 (0-indexed)
-        if (leagueInfoCSV) {
-            SCHEDULE = [];
-            for (let i = 0; i < leagueInfoCSV.length; i++) {
-                const r = leagueInfoCSV[i];
+        // --- Schedule from League Info ---
+        let sched = [];
+        if (leagueR) {
+            for (const r of leagueR) {
                 const wk = parseFloat(r[3]);
-                if (!isNaN(wk) && wk >= 1 && wk <= 30 && r[5]) {
-                    // Parse date - could be various formats from Google Sheets CSV
-                    let dateStr = (r[7] || '').trim();
-                    // Try to format nicely
-                    if (dateStr) {
-                        try {
-                            const d = new Date(dateStr);
-                            if (!isNaN(d.getTime())) {
-                                const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-                                dateStr = `${months[d.getMonth()]} ${d.getDate()}`;
-                            }
-                        } catch(e) {}
-                    }
-                    SCHEDULE.push({
-                        wk: Math.floor(wk),
-                        cls: (r[4] || '').trim(),
-                        name: (r[5] || '').trim(),
-                        pts: parseFloat(r[6]) || 0,
-                        date: dateStr,
-                        loc: (r[8] || '').trim()
-                    });
+                if (!isNaN(wk) && wk >= 1 && wk <= 30 && (r[5]||'').trim()) {
+                    sched.push({ wk:Math.floor(wk), cls:(r[4]||'').trim(), name:(r[5]||'').trim(), pts:toF(r[6]), date:fmtDate((r[7]||'').trim()), loc:(r[8]||'').trim() });
                 }
             }
         }
+        renderSchedule(sched);
 
-        // Fallback schedule if League Info tab not published yet
-        if (SCHEDULE.length === 0) {
-            SCHEDULE = [
-                { wk:1,  cls:'DGPT',  name:'Supreme Flight Open',       pts:150, date:'Feb 28', loc:'US' },
-                { wk:2,  cls:'DGPT',  name:'Waco',                      pts:150, date:'Mar 14', loc:'US' },
-                { wk:3,  cls:'DGPT+', name:'The Open at Austin',         pts:200, date:'Mar 20', loc:'US' },
-                { wk:4,  cls:'DGPT',  name:'Music City Open',            pts:150, date:'Apr 4',  loc:'US' },
-                { wk:5,  cls:'DGPT',  name:'Kansas City Wide Open',      pts:150, date:'Apr 18', loc:'US' },
-                { wk:6,  cls:'MAJOR', name:'Champions Cup',              pts:300, date:'May 1',  loc:'US' },
-                { wk:7,  cls:'DGPT',  name:'Cascade Challenge',          pts:150, date:'May 16', loc:'US' },
-                { wk:8,  cls:'DGPT',  name:'Konopiste Open',             pts:150, date:'May 23', loc:'EU' },
-                { wk:9,  cls:'DGPT+', name:'Northwest Disc Golf Champ',  pts:200, date:'May 29', loc:'US' },
-                { wk:10, cls:'DGPT',  name:'Ale Open',                   pts:150, date:'Jun 6',  loc:'EU' },
-                { wk:11, cls:'DGPT',  name:'Preserve Championship',      pts:150, date:'Jun 13', loc:'US' },
-                { wk:12, cls:'DGPT',  name:'Discmania Challenge',        pts:150, date:'Jun 27', loc:'US' },
-                { wk:13, cls:'DGPT',  name:'PCS Open',                   pts:150, date:'Jul 4',  loc:'EU' },
-                { wk:14, cls:'DGPT',  name:'Krokhol Open',               pts:150, date:'Jul 11', loc:'EU' },
-                { wk:15, cls:'MAJOR', name:'PDGA World Championship',    pts:300, date:'Jul 30', loc:'EU' },
-                { wk:16, cls:'DGPT',  name:'Turku Open',                 pts:150, date:'Aug 8',  loc:'EU' },
-                { wk:17, cls:'DGPT+', name:'Ledgestone Open',            pts:200, date:'Aug 14', loc:'US' },
-                { wk:18, cls:'DGPT',  name:'LWS Open at Idlewild',       pts:150, date:'Aug 22', loc:'US' },
-                { wk:19, cls:'DGPT+', name:'Great Lakes Open',           pts:200, date:'Sep 4',  loc:'US' },
-                { wk:20, cls:'MAJOR', name:'USDGC',                      pts:300, date:'Oct 9',  loc:'US' }
-            ];
-        }
-
-        // ---- Parse Transactions from FAIR CSV ----
-        // FAIR CSV: Date, Team, Add, Drop, Priority, (blank), (blank), then IR section
-        if (fairCSV) {
-            TRANSACTIONS = [];
-            for (let i = 1; i < fairCSV.length; i++) {
-                const r = fairCSV[i];
-                const dateRaw = (r[0] || '').trim();
-                const team = (r[1] || '').trim();
-                const add = (r[2] || '').trim();
-                const drop = (r[3] || '').trim();
-                if (!dateRaw || !team || !add) continue;
-                // Format date
-                let dateStr = dateRaw;
-                try {
-                    const d = new Date(dateRaw);
-                    if (!isNaN(d.getTime())) {
-                        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-                        dateStr = `${months[d.getMonth()]} ${d.getDate()}`;
-                    }
-                } catch(e) {}
-                TRANSACTIONS.push({ date: dateStr, team, add, drop: drop || '-' });
+        // --- Transactions from FAIR ---
+        let txns = [];
+        if (fairR) {
+            for (let i = 1; i < fairR.length; i++) {
+                const r = fairR[i], dt=(r[0]||'').trim(), tm=(r[1]||'').trim(), ad=(r[2]||'').trim(), dr=(r[3]||'').trim();
+                if (dt && tm && ad) txns.push({ date:fmtDate(dt), team:tm, add:ad, drop:dr||'-' });
             }
         }
+        renderTx(txns);
 
-        // Fallback transactions if FAIR tab not published yet
-        if (TRANSACTIONS.length === 0) {
-            TRANSACTIONS = [
-                { date:'Mar 6',  team:'Team Birdogey', add:'Austin Turner',   drop:'Cole Redalen' },
-                { date:'Mar 26', team:'Team Pete',     add:'Sullivan Tipton', drop:'IR' },
-                { date:'Mar 26', team:'Team DiscPerv', add:'Väinö Mäkelä',   drop:'IR' },
-                { date:'Mar 26', team:'Uncle Reko',    add:'Jake Monn',       drop:'Casey White' },
-                { date:'Mar 26', team:'Team Greg',     add:'Ezra Aderhold',   drop:'Robert Burridge' },
-                { date:'Apr 25', team:'HeimDoph',      add:'Paul Krans',      drop:'IR' },
-                { date:'Apr 25', team:'Uncle Reko',    add:'Bradley Williams', drop:'IR' },
-                { date:'May 15', team:'Team Pete',     add:'James Proctor',   drop:'Luke Taylor' },
-                { date:'Jul 7',  team:'Team Birdogey', add:'Cole Redalen',    drop:'Gavin Rathbun' }
-            ];
-        }
-
-        renderHome();
+        // Render all
+        renderStandings();
+        renderBonus();
+        renderTop20();
         renderTeams();
-        renderSchedule();
-        renderTransactions();
 
         document.getElementById('homeLoading').style.display = 'none';
-        document.getElementById('homeContent').style.display = 'block';
+        document.getElementById('homeContent').style.display = '';
         document.getElementById('teamsLoading').style.display = 'none';
         document.getElementById('teamsGrid').style.display = '';
 
     } catch (err) {
         console.error(err);
         document.getElementById('homeLoading').innerHTML =
-            `<div class="error-msg">Failed to load data: ${err.message}. Try refreshing.</div>`;
+            `<div class="error-msg">
+                <strong>Failed to load data</strong><br><br>
+                ${err.message}<br><br>
+                <span style="color:var(--text-muted);font-size:12px">
+                Each tab's GID needs to be set in the CSV config at the top of the &lt;script&gt; block.<br>
+                In Google Sheets: File → Share → Publish to web → select tab → CSV → Publish<br>
+                Then copy the <code>gid=XXXXX</code> number from each URL into the config.
+                </span>
+            </div>`;
     }
 }
 
-// ==========================================
-// RENDER: HOME PAGE
-// ==========================================
-function renderHome() {
-    // Sort teams by points descending = auto-rank
-    const sorted = Object.entries(teamData)
-        .map(([name, d]) => ({ name, ...d }))
-        .sort((a, b) => b.totalPoints - a.totalPoints);
-
-    // -- STANDINGS TABLE --
-    const tbody = document.getElementById('standingsBody');
-    tbody.innerHTML = sorted.map((t, i) => {
-        const rank = i + 1;
-        const rankClass = rank <= 3 ? `rank-${rank}` : '';
-        return `<tr>
-            <td class="rank-cell ${rankClass}">${rank}</td>
-            <td class="team-name">${t.name}</td>
-            <td style="color:var(--text-secondary)">${t.manager || MANAGERS[t.name] || ''}</td>
-            <td class="num pts-highlight">${t.totalPoints.toFixed(2)}</td>
-            <td class="num">${t.totalStarts}</td>
-            <td class="num">${t.totalWins}</td>
-            <td class="num">${t.totalTop10s}</td>
-            <td class="num">${t.totalCashed}</td>
-        </tr>`;
+// ================================================================
+//  RENDERERS
+// ================================================================
+function renderStandings() {
+    document.getElementById('standingsBody').innerHTML = teamList.map((t,i) => {
+        const r = i+1, rc = r<=3?`rank-${r}`:'';
+        return `<tr><td class="rank-cell ${rc}">${r}</td><td class="team-name">${t.name}</td><td style="color:var(--text-secondary)">${t.manager}</td><td class="num pts-highlight">${t.totalPoints.toFixed(2)}</td><td class="num">${t.totalStarts}</td><td class="num">${t.totalWins}</td><td class="num">${t.totalTop10s}</td><td class="num">${t.totalCashed}</td></tr>`;
     }).join('');
-
-    // -- BONUS LEADERS --
-    const bonusCategories = [
-        { key: 'totalStarts', label: 'Most Starts',  cls: 'starts', pts: '50 pts', icon: '🎯' },
-        { key: 'totalWins',   label: 'Most Wins',    cls: 'wins',   pts: '150 pts', icon: '🏆' },
-        { key: 'totalTop10s', label: 'Most Top 10s',  cls: 'top10',  pts: '100 pts', icon: '🔥' },
-        { key: 'totalCashed', label: 'Most Cashed',  cls: 'cash',   pts: '75 pts', icon: '💰' }
+}
+function renderBonus() {
+    const cats = [
+        {k:'totalStarts',l:'Most Starts',c:'starts',p:'50 pts'},
+        {k:'totalWins',l:'Most Wins',c:'wins',p:'150 pts'},
+        {k:'totalTop10s',l:'Most Top 10s',c:'top10',p:'100 pts'},
+        {k:'totalCashed',l:'Most Cashed',c:'cash',p:'75 pts'}
     ];
-
-    const bonusGrid = document.getElementById('bonusGrid');
-    bonusGrid.innerHTML = bonusCategories.map(cat => {
-        const maxVal = Math.max(...sorted.map(t => t[cat.key]));
-        const leaders = sorted.filter(t => t[cat.key] === maxVal);
-        const leaderNames = leaders.map(t => t.name).join(', ');
-        return `<div class="bonus-card ${cat.cls}">
-            <div class="bonus-category">${cat.label}</div>
-            <div class="bonus-pts">${cat.pts}</div>
-            <div class="bonus-leader">${leaderNames}</div>
-            <div class="bonus-stat">${maxVal}</div>
-        </div>`;
-    }).join('');
-
-    // -- TOP 20 PLAYERS --
-    const top20 = allPlayerStats
-        .sort((a, b) => a.rank - b.rank || b.points - a.points)
-        .slice(0, 20);
-
-    const top20Body = document.getElementById('top20Body');
-    top20Body.innerHTML = top20.map((p, i) => {
-        const rankClass = p.rank <= 3 ? `rank-${Math.floor(p.rank)}` : '';
-        const teamTag = p.team !== '-'
-            ? `<span class="team-tag">${p.team}</span>`
-            : `<span class="team-tag none">FA</span>`;
-        return `<tr>
-            <td class="rank-cell ${rankClass}">${Math.floor(p.rank)}</td>
-            <td class="player-name">${p.player}</td>
-            <td>${teamTag}</td>
-            <td class="num pts-highlight">${p.points}</td>
-            <td class="num">${Math.floor(p.starts)}</td>
-            <td class="num">${Math.floor(p.wins)}</td>
-            <td class="num">${Math.floor(p.top10s)}</td>
-            <td class="num">${Math.floor(p.cashed)}</td>
-        </tr>`;
+    document.getElementById('bonusGrid').innerHTML = cats.map(cat => {
+        const mx = Math.max(...teamList.map(t=>t[cat.k]));
+        const ld = teamList.filter(t=>t[cat.k]===mx).map(t=>t.name).join(', ');
+        return `<div class="bonus-card ${cat.c}"><div class="bonus-category">${cat.l}</div><div class="bonus-pts">${cat.p}</div><div class="bonus-leader">${ld}</div><div class="bonus-stat">${mx}</div></div>`;
     }).join('');
 }
-
-// ==========================================
-// RENDER: TEAMS PAGE
-// ==========================================
+function renderTop20() {
+    const top = allPlayers.sort((a,b)=>a.rank-b.rank||b.points-a.points).slice(0,20);
+    document.getElementById('top20Body').innerHTML = top.map(p => {
+        const rc = p.rank<=3?`rank-${Math.floor(p.rank)}`:'';
+        const tag = p.team!=='-'?`<span class="team-tag">${p.team}</span>`:`<span class="team-tag none">FA</span>`;
+        return `<tr><td class="rank-cell ${rc}">${Math.floor(p.rank)}</td><td class="player-name">${p.player}</td><td>${tag}</td><td class="num pts-highlight">${p.points}</td><td class="num">${Math.floor(p.starts)}</td><td class="num">${Math.floor(p.wins)}</td><td class="num">${Math.floor(p.top10s)}</td><td class="num">${Math.floor(p.cashed)}</td></tr>`;
+    }).join('');
+}
 function renderTeams() {
-    const sorted = Object.entries(teamData)
-        .map(([name, d]) => ({ name, ...d }))
-        .sort((a, b) => b.totalPoints - a.totalPoints);
-
-    const grid = document.getElementById('teamsGrid');
-    grid.innerHTML = sorted.map((t, i) => {
-        const rank = i + 1;
-        const rankCls = rank <= 3 ? `team-rank-${rank}` : 'team-rank-other';
-
-        // Sort players by points descending
-        const rosterHTML = t.players
-            .sort((a, b) => b.points - a.points)
-            .map((p, j) => `
-                <div class="roster-row">
-                    <div class="player-info">
-                        <span class="slot">${j + 1}</span>
-                        <span class="pname">${p.name}</span>
-                    </div>
-                    <div class="roster-stats">
-                        <span class="mini-stat" title="Starts">S:${Math.floor(p.starts)}</span>
-                        <span class="mini-stat" title="Wins">W:${Math.floor(p.wins)}</span>
-                        <span class="mini-stat" title="Top 10s">T10:${Math.floor(p.top10s)}</span>
-                        <span class="player-pts">${p.points}</span>
-                    </div>
-                </div>
-            `).join('');
-
+    document.getElementById('teamsGrid').innerHTML = teamList.map((t,i) => {
+        const r=i+1, rc=r<=3?`team-rank-${r}`:'team-rank-other';
+        const roster = t.players.sort((a,b)=>b.points-a.points).map((p,j)=>`
+            <div class="roster-row"><div class="player-info"><span class="slot">${j+1}</span><span class="pname">${p.name}</span></div><div class="roster-stats"><span class="mini-stat">S:${Math.floor(p.starts)}</span><span class="mini-stat">W:${Math.floor(p.wins)}</span><span class="mini-stat">T10:${Math.floor(p.top10s)}</span><span class="player-pts">${p.points}</span></div></div>`).join('');
         return `<div class="team-card">
-            <div class="team-card-head">
-                <div style="display:flex;align-items:center">
-                    <div class="team-rank-badge ${rankCls}">${rank}</div>
-                    <div class="team-info">
-                        <h3>${t.name}</h3>
-                        <div class="manager">${t.manager || MANAGERS[t.name] || ''}</div>
-                    </div>
-                </div>
-                <div class="team-pts-block">
-                    <div class="big-pts">${t.totalPoints.toFixed(2)}</div>
-                    <div class="label">Total Pts</div>
-                </div>
-            </div>
-            <div class="team-meta">
-                <div class="team-meta-item"><div class="val">${t.totalStarts}</div><div class="lbl">Starts</div></div>
-                <div class="team-meta-item"><div class="val">${t.totalWins}</div><div class="lbl">Wins</div></div>
-                <div class="team-meta-item"><div class="val">${t.totalTop10s}</div><div class="lbl">Top 10s</div></div>
-                <div class="team-meta-item"><div class="val">${t.totalCashed}</div><div class="lbl">Cashed</div></div>
-            </div>
-            <div class="team-roster">${rosterHTML}</div>
-            <div class="team-footer">
-                <span>Add/Drops Remaining</span>
-                <span class="drops">${t.addsRemaining}</span>
-            </div>
+            <div class="team-card-head"><div style="display:flex;align-items:center"><div class="team-rank-badge ${rc}">${r}</div><div class="team-info"><h3>${t.name}</h3><div class="manager">${t.manager}</div></div></div><div class="team-pts-block"><div class="big-pts">${t.totalPoints.toFixed(2)}</div><div class="label">Total Pts</div></div></div>
+            <div class="team-meta"><div class="team-meta-item"><div class="val">${t.totalStarts}</div><div class="lbl">Starts</div></div><div class="team-meta-item"><div class="val">${t.totalWins}</div><div class="lbl">Wins</div></div><div class="team-meta-item"><div class="val">${t.totalTop10s}</div><div class="lbl">Top 10s</div></div><div class="team-meta-item"><div class="val">${t.totalCashed}</div><div class="lbl">Cashed</div></div></div>
+            <div class="team-roster">${roster}</div>
+            <div class="team-footer"><span>Add/Drops Remaining</span><span class="drops">${t.addsRemaining}</span></div>
         </div>`;
     }).join('');
 }
-
-// ==========================================
-// RENDER: SCHEDULE
-// ==========================================
-function renderSchedule() {
-    const tbody = document.getElementById('scheduleBody');
-    tbody.innerHTML = SCHEDULE.map(e => {
-        let clsTag = '';
-        if (e.cls === 'DGPT') clsTag = '<span class="event-class class-dgpt">DGPT</span>';
-        else if (e.cls === 'DGPT+') clsTag = '<span class="event-class class-dgpt-plus">DGPT+</span>';
-        else if (e.cls === 'MAJOR') clsTag = '<span class="event-class class-major">MAJOR</span>';
-        return `<tr class="schedule-row">
-            <td class="num" style="text-align:center">${e.wk}</td>
-            <td>${e.name}</td>
-            <td>${clsTag}</td>
-            <td class="num">${e.pts}</td>
-            <td>${e.date}</td>
-            <td>${e.loc === 'EU' ? '🌍 EU' : '🇺🇸 US'}</td>
-        </tr>`;
+function renderSchedule(sched) {
+    const el=document.getElementById('scheduleBody'), wrap=document.getElementById('scheduleWrap'), load=document.getElementById('scheduleLoading');
+    if (!sched.length) { load.innerHTML='<span style="color:var(--text-muted)">Publish the League Info tab to see the schedule.</span>'; return; }
+    el.innerHTML = sched.map(e => {
+        const c=e.cls.toUpperCase();
+        let tag = c==='MAJOR'?'<span class="event-class class-major">MAJOR</span>':c==='DGPT+'?'<span class="event-class class-dgpt-plus">DGPT+</span>':'<span class="event-class class-dgpt">DGPT</span>';
+        const loc = (e.loc||'').toUpperCase().includes('EU')?'🌍 EU':'🇺🇸 US';
+        return `<tr><td class="num" style="text-align:center">${e.wk}</td><td>${e.name}</td><td>${tag}</td><td class="num">${e.pts}</td><td>${e.date}</td><td>${loc}</td></tr>`;
     }).join('');
+    load.style.display='none'; wrap.style.display='';
+}
+function renderTx(txns) {
+    const el=document.getElementById('txBody'), wrap=document.getElementById('txWrap'), load=document.getElementById('txLoading');
+    if (!txns.length) { load.innerHTML='<span style="color:var(--text-muted)">Publish the FAIR tab to see transactions.</span>'; return; }
+    el.innerHTML = txns.map(tx=>`<tr><td>${tx.date}</td><td>${tx.team}</td><td class="tx-add">+ ${tx.add}</td><td class="tx-drop">− ${tx.drop}</td></tr>`).join('');
+    load.style.display='none'; wrap.style.display='';
 }
 
-// ==========================================
-// RENDER: TRANSACTIONS
-// ==========================================
-function renderTransactions() {
-    const tbody = document.getElementById('txBody');
-    tbody.innerHTML = TRANSACTIONS.map(tx => `<tr>
-        <td>${tx.date}</td>
-        <td>${tx.team}</td>
-        <td class="tx-add">+ ${tx.add}</td>
-        <td class="tx-drop">− ${tx.drop}</td>
-    </tr>`).join('');
-}
-
-// ==========================================
 // NAV
-// ==========================================
 document.querySelectorAll('.nav-tab').forEach(tab => {
     tab.addEventListener('click', () => {
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+        document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
         tab.classList.add('active');
-        document.getElementById('page-' + tab.dataset.page).classList.add('active');
+        document.getElementById('page-'+tab.dataset.page).classList.add('active');
     });
 });
 
-// ==========================================
-// INIT
-// ==========================================
+// GO
 loadData();
 </script>
 </body>
