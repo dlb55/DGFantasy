@@ -211,7 +211,7 @@
         .roster-row .pname { font-size: 14px; font-weight: 500; }
         .roster-row .player-pts { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent-green); }
         .roster-stats { display: flex; gap: 12px; align-items: center; }
-        .roster-stats .mini-stat { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+        .roster-stats .mini-stat { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); font-weight: 500; }
         .team-footer { padding: 10px 20px; background: var(--bg-accent); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
         .team-footer .drops { font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); }
         .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -321,7 +321,7 @@
                 </div>
                 <div class="card full-width">
                     <div class="card-header">
-                        <div class="card-title"><span class="icon" style="background:var(--accent-blue-dim);color:var(--accent-blue)">📊</span> DGPT Player Rankings — Top 20</div>
+                        <div class="card-title"><span class="icon" style="background:var(--accent-blue-dim);color:var(--accent-blue)">📊</span> DGPT Player Rankings — Top 50</div>
                     </div>
                     <div class="table-wrap"><table>
                         <thead><tr><th style="text-align:center">#</th><th>Player</th><th>Team</th><th class="num">Points</th><th class="num">Starts</th><th class="num">Wins</th><th class="num">Top 10s</th><th class="num">Cashed</th></tr></thead>
@@ -603,7 +603,7 @@ function renderBonus() {
     }).join('');
 }
 function renderTop20() {
-    const top = allPlayers.sort((a,b)=>a.rank-b.rank||b.points-a.points).slice(0,20);
+    const top = allPlayers.sort((a,b)=>a.rank-b.rank||b.points-a.points).slice(0,50);
     document.getElementById('top20Body').innerHTML = top.map(p => {
         const rc = p.rank<=3?`rank-${Math.floor(p.rank)}`:'';
         const tag = p.team!=='-'?`<span class="team-tag">${p.team}</span>`:`<span class="team-tag none">FA</span>`;
