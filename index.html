@@ -321,7 +321,7 @@
                 </div>
                 <div class="card full-width">
                     <div class="card-header">
-                        <div class="card-title"><span class="icon" style="background:var(--accent-blue-dim);color:var(--accent-blue)">📊</span> DGPT Player Rankings — Top 50</div>
+                        <div class="card-title"><span class="icon" style="background:var(--accent-blue-dim);color:var(--accent-blue)">📊</span> DGPT Player Rankings — Top 100</div>
                     </div>
                     <div class="table-wrap"><table>
                         <thead><tr><th style="text-align:center">#</th><th>Player</th><th>Team</th><th class="num">Points</th><th class="num">Starts</th><th class="num">Wins</th><th class="num">Top 10s</th><th class="num">Cashed</th></tr></thead>
@@ -339,8 +339,8 @@
     <!-- RULES -->
     <div class="page" id="page-rules">
         <div class="rules-grid">
-            <div class="rule-section"><h3>📋 League Info</h3><ul><li>4 golfer rosters per team</li><li>All 4 golfers will be active</li><li>6 teams competing</li></ul></div>
-            <div class="rule-section"><h3>🔄 Waivers</h3><ul><li>4 add/drops allowed throughout the season</li><li>Claims: Monday – Wednesday 11:59 PM MT (Text Drew your request)</li><li>Competing claims defer to team with lowest total points</li></ul></div>
+            <div class="rule-section"><h3>📋 League Info</h3><ul><li>5 golfer rosters per team</li><li>All 5 golfers will be active</li><li>6 teams competing</li></ul></div>
+            <div class="rule-section"><h3>🔄 Waivers</h3><ul><li>5 add/drops allowed throughout the season</li><li>Claims: Monday – Wednesday 11:59 PM MT (Text Drew your request)</li><li>Competing claims defer to team with lowest total points</li></ul></div>
             <div class="rule-section"><h3>🤝 Trades</h3><ul><li>Trades allowed during waiver period</li><li>Uneven trades (2-for-1, etc.) require waiver claims; standard order applies</li></ul></div>
             <div class="rule-section"><h3>🏥 Injured Reserve</h3><ul><li>Each team has 1 IR spot for long-term injuries</li><li>Player must remain on IR for at least 3 events</li><li>Priority waiver claim to fill the open spot</li></ul></div>
             <div class="rule-section"><h3>📈 Scoring</h3><ul><li>Disc Golf Pro Tour point system</li><li>20 total events (playoff events excluded)</li><li>Stats via <a href="https://statmando.com/rankings/dgpt-season/mpo" target="_blank" style="color:var(--accent-green)">StatMando Rankings</a></li></ul></div>
@@ -603,7 +603,7 @@ function renderBonus() {
     }).join('');
 }
 function renderTop20() {
-    const top = allPlayers.sort((a,b)=>a.rank-b.rank||b.points-a.points).slice(0,50);
+    const top = allPlayers.sort((a,b)=>a.rank-b.rank||b.points-a.points).slice(0,100);
     document.getElementById('top20Body').innerHTML = top.map(p => {
         const rc = p.rank<=3?`rank-${Math.floor(p.rank)}`:'';
         const tag = p.team!=='-'?`<span class="team-tag">${p.team}</span>`:`<span class="team-tag none">FA</span>`;
