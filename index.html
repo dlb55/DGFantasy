@@ -335,6 +335,19 @@
     <div class="page" id="page-teams">
         <div id="teamsLoading" class="loading"><div class="spinner"></div>Loading teams…</div>
         <div class="teams-grid" id="teamsGrid" style="display:none;"></div>
+        <div id="draftSection" style="display:none; margin-top: 28px;">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><span class="icon" style="background:var(--accent-purple-dim);color:var(--accent-purple)">📝</span> 2026 Draft Board</div>
+                </div>
+                <div class="table-wrap">
+                    <table id="draftTable">
+                        <thead id="draftHead"></thead>
+                        <tbody id="draftBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- RULES -->
     <div class="page" id="page-rules">
@@ -389,7 +402,8 @@ const CSV = {
     playerStats: BASE + "?gid=1269436938&single=true&output=csv",
     updated:     BASE + "?gid=1403937531&single=true&output=csv",
     leagueInfo:  BASE + "?gid=540664680&single=true&output=csv",
-    fair:        BASE + "?gid=1047508582&single=true&output=csv"
+    fair:        BASE + "?gid=1047508582&single=true&output=csv",
+    draft:       BASE + "?gid=1651601930&single=true&output=csv"
 };
 
 const MANAGERS = {
@@ -445,9 +459,10 @@ async function loadData() {
             fetchCSV(CSV.updated)
         ]);
         // Optional sheets — don't fail if these can't load
-        let leagueR = null, fairR = null;
+        let leagueR = null, fairR = null, draftR = null;
         try { leagueR = await fetchCSV(CSV.leagueInfo); } catch(e) { console.warn('League Info:', e); }
         try { fairR = await fetchCSV(CSV.fair); } catch(e) { console.warn('FAIR:', e); }
+        try { draftR = await fetchCSV(CSV.draft); } catch(e) { console.warn('Draft:', e); }
 
         // --- Updated ---
         if (updatedR.length > 1) {
@@ -559,6 +574,7 @@ async function loadData() {
         renderBonus();
         renderTop20();
         renderTeams();
+        renderDraft(draftR);
 
         document.getElementById('homeLoading').style.display = 'none';
         document.getElementById('homeContent').style.display = '';
@@ -639,6 +655,44 @@ function renderTx(txns) {
     if (!txns.length) { load.innerHTML='<span style="color:var(--text-muted)">Publish the FAIR tab to see transactions.</span>'; return; }
     el.innerHTML = txns.map(tx=>`<tr><td>${tx.date}</td><td>${tx.team}</td><td class="tx-add">+ ${tx.add}</td><td class="tx-drop">− ${tx.drop}</td></tr>`).join('');
     load.style.display='none'; wrap.style.display='';
+}
+
+function renderDraft(draftR) {
+    if (!draftR || draftR.length < 4) return;
+    // Draft CSV layout:
+    // Row 0-1: blank
+    // Row 2: headers — blank, Manager1, Manager2, ...
+    // Row 3+: round#, pick, pick, pick, ...
+    // Find the header row (first row with multiple non-empty cells)
+    let headerIdx = -1;
+    for (let i = 0; i < draftR.length; i++) {
+        const nonEmpty = draftR[i].filter(c => c.trim()).length;
+        if (nonEmpty >= 3) { headerIdx = i; break; }
+    }
+    if (headerIdx < 0) return;
+
+    const headers = draftR[headerIdx];
+    // Build thead
+    const thead = document.getElementById('draftHead');
+    thead.innerHTML = '<tr><th style="text-align:center">Rd</th>' +
+        headers.slice(1).filter(h => h.trim()).map(h => `<th>${h.trim()}</th>`).join('') + '</tr>';
+
+    // Build tbody — rows after header that have a round number
+    const tbody = document.getElementById('draftBody');
+    let rows = '';
+    for (let i = headerIdx + 1; i < draftR.length; i++) {
+        const r = draftR[i];
+        const rd = parseFloat(r[0]);
+        if (isNaN(rd) || rd < 1) continue;
+        const numManagers = headers.slice(1).filter(h => h.trim()).length;
+        rows += `<tr><td class="rank-cell" style="color:var(--accent-purple)">${Math.floor(rd)}</td>`;
+        for (let c = 1; c <= numManagers; c++) {
+            rows += `<td class="player-name">${(r[c]||'').trim()}</td>`;
+        }
+        rows += '</tr>';
+    }
+    tbody.innerHTML = rows;
+    document.getElementById('draftSection').style.display = '';
 }
 
 // NAV
