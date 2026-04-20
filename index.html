@@ -685,6 +685,12 @@ function renderChart(historyR) {
         const r = historyR[i];
         const evName = (r[0] || '').trim();
         if (!evName) continue;
+        // Skip events with no data entered yet
+        const hasData = teamNames.some((_, t) => {
+            const v = (r[t + 1] || '').trim();
+            return v !== '' && toF(v) > 0;
+        });
+        if (!hasData) continue;
         events.push(evName);
         for (let t = 0; t < teamNames.length; t++) {
             datasets[t].push(toF(r[t + 1]));
