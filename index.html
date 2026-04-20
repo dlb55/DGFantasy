@@ -335,6 +335,18 @@
     <div class="page" id="page-teams">
         <div id="teamsLoading" class="loading"><div class="spinner"></div>Loading teams…</div>
         <div class="teams-grid" id="teamsGrid" style="display:none;"></div>
+        <div id="chartSection" style="display:none; margin-top: 28px;">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><span class="icon" style="background:var(--accent-green-dim);color:var(--accent-green)">📈</span> Points Race</div>
+                    <div class="card-subtitle">Cumulative team points after each event</div>
+                </div>
+                <div id="chartContainer" style="width:100%; overflow-x:auto;">
+                    <canvas id="pointsChart" height="380"></canvas>
+                </div>
+                <div id="chartLegend" style="display:flex; flex-wrap:wrap; gap:12px 20px; margin-top:16px; justify-content:center;"></div>
+            </div>
+        </div>
         <div id="draftSection" style="display:none; margin-top: 28px;">
             <div class="card">
                 <div class="card-header">
@@ -403,7 +415,8 @@ const CSV = {
     updated:     BASE + "?gid=1403937531&single=true&output=csv",
     leagueInfo:  BASE + "?gid=540664680&single=true&output=csv",
     fair:        BASE + "?gid=1047508582&single=true&output=csv",
-    draft:       BASE + "?gid=1651601930&single=true&output=csv"
+    draft:       BASE + "?gid=1651601930&single=true&output=csv",
+    pointsHistory: BASE + "?gid=1146617704&single=true&output=csv"
 };
 
 const MANAGERS = {
@@ -459,10 +472,11 @@ async function loadData() {
             fetchCSV(CSV.updated)
         ]);
         // Optional sheets — don't fail if these can't load
-        let leagueR = null, fairR = null, draftR = null;
+        let leagueR = null, fairR = null, draftR = null, historyR = null;
         try { leagueR = await fetchCSV(CSV.leagueInfo); } catch(e) { console.warn('League Info:', e); }
         try { fairR = await fetchCSV(CSV.fair); } catch(e) { console.warn('FAIR:', e); }
         try { draftR = await fetchCSV(CSV.draft); } catch(e) { console.warn('Draft:', e); }
+        try { historyR = await fetchCSV(CSV.pointsHistory); } catch(e) { console.warn('Points History:', e); }
 
         // --- Updated ---
         if (updatedR.length > 1) {
@@ -575,6 +589,7 @@ async function loadData() {
         renderTop20();
         renderTeams();
         renderDraft(draftR);
+        renderChart(historyR);
 
         document.getElementById('homeLoading').style.display = 'none';
         document.getElementById('homeContent').style.display = '';
@@ -655,6 +670,141 @@ function renderTx(txns) {
     if (!txns.length) { load.innerHTML='<span style="color:var(--text-muted)">Publish the FAIR tab to see transactions.</span>'; return; }
     el.innerHTML = txns.map(tx=>`<tr><td>${tx.date}</td><td>${tx.team}</td><td class="tx-add">+ ${tx.add}</td><td class="tx-drop">− ${tx.drop}</td></tr>`).join('');
     load.style.display='none'; wrap.style.display='';
+}
+
+function renderChart(historyR) {
+    if (!historyR || historyR.length < 2) return;
+    // CSV layout: Event | Team1 | Team2 | Team3 | ...
+    // Each row = cumulative points after that event
+    const headers = historyR[0];
+    const teamNames = headers.slice(1).map(h => h.trim()).filter(Boolean);
+    const events = [];
+    const datasets = teamNames.map(() => []);
+
+    for (let i = 1; i < historyR.length; i++) {
+        const r = historyR[i];
+        const evName = (r[0] || '').trim();
+        if (!evName) continue;
+        events.push(evName);
+        for (let t = 0; t < teamNames.length; t++) {
+            datasets[t].push(toF(r[t + 1]));
+        }
+    }
+    if (events.length === 0) return;
+
+    // Team colors
+    const colors = [
+        '#22c55e', '#3b82f6', '#f59e0b', '#a855f7', '#ef4444', '#06b6d4',
+        '#ec4899', '#84cc16', '#f97316', '#6366f1'
+    ];
+
+    const canvas = document.getElementById('pointsChart');
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+
+    // Responsive sizing
+    const container = document.getElementById('chartContainer');
+    const W = Math.max(container.clientWidth, events.length * 80);
+    const H = 380;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(dpr, dpr);
+
+    // Chart area
+    const pad = { top: 20, right: 24, bottom: 80, left: 60 };
+    const cW = W - pad.left - pad.right;
+    const cH = H - pad.top - pad.bottom;
+
+    // Find max value
+    const allVals = datasets.flat();
+    const maxVal = Math.max(...allVals, 100);
+    const niceMax = Math.ceil(maxVal / 100) * 100;
+
+    // Clear
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid lines
+    const gridSteps = 5;
+    ctx.strokeStyle = 'rgba(30,45,74,0.5)';
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#5a6480';
+    ctx.font = '11px JetBrains Mono, monospace';
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= gridSteps; i++) {
+        const y = pad.top + cH - (i / gridSteps) * cH;
+        const val = Math.round((i / gridSteps) * niceMax);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(W - pad.right, y);
+        ctx.stroke();
+        ctx.fillText(val, pad.left - 8, y + 4);
+    }
+
+    // X labels (event names, angled)
+    ctx.fillStyle = '#8892a8';
+    ctx.font = '11px Outfit, sans-serif';
+    ctx.textAlign = 'right';
+    const xStep = cW / Math.max(events.length - 1, 1);
+    ctx.save();
+    for (let i = 0; i < events.length; i++) {
+        const x = pad.left + i * xStep;
+        ctx.save();
+        ctx.translate(x, pad.top + cH + 12);
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillText(events[i], 0, 0);
+        ctx.restore();
+    }
+    ctx.restore();
+
+    // Draw lines
+    for (let t = 0; t < teamNames.length; t++) {
+        const color = colors[t % colors.length];
+        const data = datasets[t];
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        for (let i = 0; i < data.length; i++) {
+            const x = pad.left + i * xStep;
+            const y = pad.top + cH - (data[i] / niceMax) * cH;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // Dots
+        ctx.fillStyle = color;
+        for (let i = 0; i < data.length; i++) {
+            const x = pad.left + i * xStep;
+            const y = pad.top + cH - (data[i] / niceMax) * cH;
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Value label on last point
+        const lastX = pad.left + (data.length - 1) * xStep;
+        const lastY = pad.top + cH - (data[data.length - 1] / niceMax) * cH;
+        ctx.fillStyle = color;
+        ctx.font = 'bold 11px JetBrains Mono, monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(data[data.length - 1].toFixed(0), lastX + 8, lastY + 4);
+    }
+
+    // Legend
+    const legend = document.getElementById('chartLegend');
+    legend.innerHTML = teamNames.map((name, i) => {
+        const color = colors[i % colors.length];
+        return `<div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;">
+            <div style="width:12px;height:12px;border-radius:3px;background:${color};flex-shrink:0;"></div>
+            <span style="color:var(--text-secondary)">${name}</span>
+        </div>`;
+    }).join('');
+
+    document.getElementById('chartSection').style.display = '';
 }
 
 function renderDraft(draftR) {
