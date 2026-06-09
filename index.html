@@ -324,7 +324,7 @@
                         <div class="card-title"><span class="icon" style="background:var(--accent-blue-dim);color:var(--accent-blue)">📊</span> DGPT Player Rankings — Top 100</div>
                     </div>
                     <div class="table-wrap"><table>
-                        <thead><tr><th style="text-align:center">#</th><th style="text-align:center">Trend</th><th>Player</th><th>Team</th><th class="num">Points</th><th class="num">Starts</th><th class="num">Wins</th><th class="num">Top 10s</th><th class="num">Cashed</th></tr></thead>
+                        <thead><tr><th style="text-align:center">#</th><th style="text-align:center">Trend</th><th>Player</th><th>Team</th><th class="num">Points</th><th class="num">Pts Gain</th><th class="num">Starts</th><th class="num">Wins</th><th class="num">Top 10s</th><th class="num">Cashed</th></tr></thead>
                         <tbody id="top20Body"></tbody>
                     </table></div>
                 </div>
@@ -492,7 +492,7 @@ async function loadData() {
             if (!name) continue;
             allPlayers.push({
                 team:(r[0]||'-').trim(), rank:toF(r[1])||999, rankGain:toF(r[2]), player:name,
-                points:toF(r[4]), starts:toF(r[6]), wins:toF(r[7]), top10s:toF(r[8]), cashed:toF(r[9])
+                points:toF(r[4]), pointsGain:toF(r[5]), starts:toF(r[6]), wins:toF(r[7]), top10s:toF(r[8]), cashed:toF(r[9])
             });
         }
 
@@ -647,7 +647,16 @@ function renderTop20() {
         } else {
             trend = `<span style="color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:12px;">—</span>`;
         }
-        return `<tr><td class="rank-cell ${rc}">${Math.floor(p.rank)}</td><td style="text-align:center">${trend}</td><td class="player-name">${p.player}</td><td>${tag}</td><td class="num pts-highlight">${p.points}</td><td class="num">${Math.floor(p.starts)}</td><td class="num">${Math.floor(p.wins)}</td><td class="num">${Math.floor(p.top10s)}</td><td class="num">${Math.floor(p.cashed)}</td></tr>`;
+        const pg = p.pointsGain;
+        let ptsGainHtml = '';
+        if (pg > 0) {
+            ptsGainHtml = `<span style="color:var(--accent-green);">+${pg}</span>`;
+        } else if (pg < 0) {
+            ptsGainHtml = `<span style="color:var(--accent-red);">${pg}</span>`;
+        } else {
+            ptsGainHtml = `<span style="color:var(--text-muted);">—</span>`;
+        }
+        return `<tr><td class="rank-cell ${rc}">${Math.floor(p.rank)}</td><td style="text-align:center">${trend}</td><td class="player-name">${p.player}</td><td>${tag}</td><td class="num pts-highlight">${p.points}</td><td class="num" style="font-family:'JetBrains Mono',monospace;font-size:12px;">${ptsGainHtml}</td><td class="num">${Math.floor(p.starts)}</td><td class="num">${Math.floor(p.wins)}</td><td class="num">${Math.floor(p.top10s)}</td><td class="num">${Math.floor(p.cashed)}</td></tr>`;
     }).join('');
 }
 function renderTeams() {
